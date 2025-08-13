@@ -165,7 +165,7 @@ export default function QuizHomePage() {
 
         <footer className="mt-12 text-center text-sm text-slate-500">
           © {new Date().getFullYear()} Quiz Wygral — zbudowane z React i
-          Tailwind. Kod na GitHub:{" "}
+          Tailwind. Kod na GitHub:https://github.com/caps-ctrl
           <a href="#" className="underline">
             twój-repo
           </a>

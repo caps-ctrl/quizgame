@@ -34,7 +34,7 @@ export default function QuizPage() {
         });
     };
 
-    const timeout = setTimeout(fetchData, 5000); // opóźnienie 1 sekundy
+    const timeout = setTimeout(fetchData, 3000);
     return () => clearTimeout(timeout);
   }, []);
 
