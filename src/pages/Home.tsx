@@ -40,15 +40,18 @@ export default function QuizHomePage() {
             Quiz Wygral
           </h1>
           <nav className="flex items-center gap-4">
-            <a href="/" className="text-sm opacity-80">
-              Home
-            </a>
-            <a href="/quiz" className="text-sm font-medium">
-              Start
-            </a>
-            <a href="/leaderboard" className="text-sm opacity-80">
-              Leaderboard
-            </a>
+            <NavLink to={"/"}>
+              {" "}
+              <h2>Home</h2>
+            </NavLink>
+            <NavLink to={"/quiz"}>
+              {" "}
+              <h2 onClick={handleStart}>Start</h2>
+            </NavLink>
+            <NavLink to={"/leaderboard"}>
+              {" "}
+              <h2>Leaderboard</h2>
+            </NavLink>
           </nav>
         </header>
 
