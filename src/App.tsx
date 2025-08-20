@@ -1,9 +1,11 @@
 import { useRoutes, BrowserRouter } from "react-router-dom";
-import QuizPage from "./pages/QuizPage";
-import QuizHomePage from "./pages/Home";
-import RootLayout from "./layouts/RootLayout";
-import LeadboardPage from "./pages/LeadboardPage";
+import React from "react";
+
 import { ThemeProvider } from "./components/ThemeProvider";
+const QuizHomePage = React.lazy(() => import("./pages/QuizHomePage"));
+const RootLayout = React.lazy(() => import("./layouts/RootLayout"));
+const LeaderBoardPage = React.lazy(() => import("./pages/LeaderboardPage"));
+const QuizPage = React.lazy(() => import("./pages/QuizPage"));
 
 function Router() {
   const element = useRoutes([
@@ -13,7 +15,7 @@ function Router() {
       children: [
         { element: <QuizHomePage />, index: true },
         { path: "quiz", element: <QuizPage /> },
-        { path: "leaderboard", element: <LeadboardPage /> },
+        { path: "leaderboard", element: <LeaderBoardPage /> },
       ],
     },
   ]);

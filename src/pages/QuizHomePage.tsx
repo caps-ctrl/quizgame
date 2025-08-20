@@ -3,10 +3,6 @@ import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
 import ThemeToggle from "../components/ThemeToggle";
 
-// QuizHomePage.tsx
-// Domyślny eksport komponentu React (TypeScript). Użyj tego jako strony głównej Twojego quizu.
-// Stylowanie: Tailwind CSS. Animacje: Framer Motion.
-
 type Score = {
   name: string;
   score: number;
@@ -169,7 +165,7 @@ export default function QuizHomePage() {
         <footer className="mt-12 text-center text-sm text-slate-500">
           © {new Date().getFullYear()} Quiz Wygral — zbudowane z React i
           Tailwind. Kod na GitHub:
-          <a href="https://github.com/caps-ctrl" className="underline">
+          <a href="https://github.com/caps-ctrl" className="hover:underline">
             https://github.com/caps-ctrl
           </a>
         </footer>

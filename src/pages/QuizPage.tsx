@@ -1,7 +1,15 @@
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
+interface question {
+  question: String;
+  correct: String;
+  chossen: String;
+}
+
 export default function QuizPage() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [ans, setAns] = useState<question[]>([]);
   const [questions, setQuestions] = useState<any[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [score, setScore] = useState(0);
@@ -17,7 +25,7 @@ export default function QuizPage() {
           if (!data.ok) {
             throw new Error(`Blad HTTP: ${data.status}`);
           }
-          console.log("cji");
+
           return data.json();
         })
         .then((r) => {
@@ -71,6 +79,15 @@ export default function QuizPage() {
 
   function handleAnswer(answer: string) {
     const currentQuestion = questions[currentIndex];
+    setAns((prev) => [
+      ...prev,
+      {
+        question: currentQuestion.question,
+        correct: currentQuestion.correct_answer,
+        chossen: answer,
+      },
+    ]);
+
     if (answer === currentQuestion.correct_answer) {
       setScore((prev) => prev + 1);
     }
@@ -103,6 +120,59 @@ export default function QuizPage() {
   if (finished)
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6 text-center">
+        {/* Modal */}
+        {isOpen && (
+          <div className="fixed inset-0 flex items-center justify-center z-50">
+            {/* Tło przyciemnione */}
+            <div
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm"
+              onClick={() => setIsOpen(false)}
+            ></div>
+
+            {/* Okno */}
+            <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 max-w-2xl w-full z-10 overflow-y-auto max-h-[80vh]">
+              <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">
+                Twoje odpowiedzi
+              </h2>
+              <div className="space-y-4">
+                {ans.map((a, idx) => (
+                  <div
+                    key={idx}
+                    className="border rounded-lg p-4 shadow-sm bg-slate-50 dark:bg-slate-800"
+                  >
+                    <h3
+                      className="font-semibold text-slate-700 dark:text-slate-200"
+                      dangerouslySetInnerHTML={{ __html: a.question }}
+                    />
+                    <p className="mt-2 text-green-600 dark:text-green-400">
+                      ✅ Poprawna: {a.correct}
+                    </p>
+                    <p
+                      className={`mt-1 ${
+                        a.chossen === a.correct
+                          ? "text-green-600 dark:text-green-400"
+                          : "text-red-600 dark:text-red-400"
+                      }`}
+                    >
+                      {a.chossen === a.correct
+                        ? "✔️ Twoja odpowiedź była poprawna"
+                        : `❌ Wybrałeś: ${a.chossen}`}
+                    </p>
+                  </div>
+                ))}
+              </div>
+
+              <button
+                onClick={() => setIsOpen(false)}
+                className="mt-6 px-6 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-800 text-white font-semibold shadow hover:scale-105 transition-transform"
+              >
+                Zamknij
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Podsumowanie */}
         <h2 className="text-4xl font-bold mb-4 text-slate-800 dark:text-slate-100">
           Koniec!
         </h2>
@@ -110,22 +180,26 @@ export default function QuizPage() {
           Twój wynik: {score} / {questions.length}
         </p>
 
-        <NavLink to={"/"}>
+        <div className="flex justify-between">
+          <NavLink to={"/"}>
+            <button
+              className="mr-2 bg-gradient-to-r dark:from-slate-500 dark:to-gray-800 from-blue-500 to-blue-900
+          text-white font-semibold py-3 px-6 rounded-xl shadow-lg
+          transform transition-transform duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
+            >
+              Zakończ quiz
+            </button>
+          </NavLink>
+
           <button
-            className="
-        bg-gradient-to-r dark:from-slate-500 dark:to-gray-800 from-blue-500 to-blue-900
-        text-white font-semibold
-        py-3 px-6
-        rounded-xl
-        shadow-lg
-        transform transition-transform duration-200
-        hover:scale-105 hover:shadow-2xl
-        active:scale-95
-      "
+            onClick={() => setIsOpen(true)}
+            className="ml-2 bg-gradient-to-r dark:from-blue-500 dark:to-indigo-800 from-blue-500 to-blue-900
+          text-white font-semibold py-3 px-6 rounded-xl shadow-lg
+          transform transition-transform duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
           >
-            Zakończ quiz
+            Sprawdź odpowiedzi
           </button>
-        </NavLink>
+        </div>
       </div>
     );
 
