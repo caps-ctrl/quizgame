@@ -1,4 +1,3 @@
-// hooks/useTheme.ts
 import { useState, useEffect } from "react";
 
 export function useTheme() {

@@ -1,13 +1,11 @@
-import { useRoutes, BrowserRouter } from "react-router-dom";
-import React from "react";
+import { useRoutes } from "react-router-dom";
 
-import { ThemeProvider } from "./components/ThemeProvider";
-const QuizHomePage = React.lazy(() => import("./pages/QuizHomePage"));
-const RootLayout = React.lazy(() => import("./layouts/RootLayout"));
-const LeaderBoardPage = React.lazy(() => import("./pages/LeaderboardPage"));
-const QuizPage = React.lazy(() => import("./pages/QuizPage"));
-
-function Router() {
+import RootLayout from "./layouts/RootLayout";
+import QuizHomePage from "./pages/QuizHomePage";
+import QuizPage from "./pages/QuizPage";
+import LeaderBoardPage from "./pages/LeaderboardPage";
+import { BrowserRouter } from "react-router-dom";
+function AppRouter() {
   const element = useRoutes([
     {
       element: <RootLayout />,
@@ -25,10 +23,8 @@ function Router() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <BrowserRouter>
-        <Router />
-      </BrowserRouter>
-    </ThemeProvider>
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
