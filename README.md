@@ -1,69 +1,49 @@
-# React + TypeScript + Vite
+# ❓ QuizGame – Frontend React Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+QuizGame to interaktywna aplikacja typu SPA stworzona w **React + TypeScript**, w której użytkownicy odpowiadają na pytania, a wyniki są zapisywane w **localStorage**.  
+Projekt kładzie nacisk na responsywność, przyjazny UX oraz płynne animacje.
 
-Currently, two official plugins are available:
+🔗 **Live demo:** [QuizGame](https://quizgame-blue.vercel.app/)  
+📂 **Repozytorium:** [GitHub](https://github.com/caps-ctrl/quizgame)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Funkcje
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- ✅ **Quiz w czasie rzeczywistym** – pytania pobierane z API, wyniki zapisywane w localStorage  
+- 🖥️ **Responsywność** – działa poprawnie na urządzeniach mobilnych i desktopowych  
+- 🎨 **TailwindCSS** – stylowanie komponentów i układu strony  
+- 🔀 **React Router** – nawigacja między ekranami quizu  
+- 🎞️ **Framer Motion** – płynne przejścia między pytaniami i wynikami  
+- 🧪 **Vitest** – testy jednostkowe komponentów  
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+## 🛠️ Technologie
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+| 🛠️ Technologia              | Opis                                      | 
+| 🔲--------------------------|-------------------------------------------|
+| ⚛️ React                    | Komponenty funkcyjne, SPA                 |
+| 🔷 TypeScript               | Typowanie i bezpieczeństwo kodu           |
+| 🔀 React Router             | Nawigacja między ekranami                 |
+| 🎨 TailwindCSS              | Stylowanie i responsywność                |
+| 🎞️ Framer Motion            | Animacje i przejścia między pytaniami     |
+| 🧪 Vitest testy jednostkowe | Testy jednostkowe komponentów             |
+| 📦 FETCH                    | Pobieranie pytań z API                    |
+| 💾 localStorage             | Zapis wyników użytkownika                 |
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 📝 Todo
+  - Rozbudowa testów jednostkowych
+  - Testy E2E dla wybranych komponentów 
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+
+## 🔧 Instalacja
+
+Aby uruchomić projekt lokalnie:
+
+```bash
+git clone https://github.com/caps-ctrl/quizgame.git
+cd quizgame
+npm install
+npm run dev
