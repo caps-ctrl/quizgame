@@ -9,14 +9,31 @@ const port = process.env.PORT || 5000;
 
 const prisma = new PrismaClient(); // Stwórz instancję klienta
 
-// Middleware
+// Konfiguracja CORS gotowa na produkcję
+const allowedOrigins = [
+  "http://localhost:5173", // Dla developmentu
+  "https://[TWOJA-NAZWA-APKI].vercel.app", // WAŻNE: Wstaw tu swój prawdziwy adres z Vercel
+];
+
 app.use(
   cors({
-    origin: "http://localhost:5173", // Wciąż potrzebne dla deweloperki
+    origin: function (origin, callback) {
+      // Zezwól na żądania bez 'origin' (np. Postman lub testy serwera)
+      if (!origin) return callback(null, true);
+
+      if (allowedOrigins.indexOf(origin) === -1) {
+        const msg =
+          "Polityka CORS dla tej strony nie zezwala na dostęp z tego adresu.";
+        return callback(new Error(msg), false);
+      }
+      return callback(null, true);
+    },
   })
 );
+
 app.use(express.json());
 
+// ... reszta kodu API ...
 // --- API z użyciem PRISMY ---
 
 // 1. Endpoint do POBIERANIA wyników

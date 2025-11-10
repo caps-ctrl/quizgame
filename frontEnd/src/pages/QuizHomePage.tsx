@@ -8,7 +8,7 @@ type Score = {
   score: number;
   date: string;
 };
-
+const API_URL = import.meta.env.VITE_API_URL;
 export default function QuizHomePage() {
   const [recentScores, setRecentScores] = useState<Score[]>([]);
   const [name, setName] = useState("Player");
@@ -16,7 +16,7 @@ export default function QuizHomePage() {
   useEffect(() => {
     const fetchRecentScores = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/scores");
+        const res = await fetch(`${API_URL}/api/scores`);
 
         if (!res.ok) {
           throw new Error("Error fetching scores");

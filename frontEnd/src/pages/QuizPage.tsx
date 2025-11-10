@@ -7,6 +7,7 @@ interface question {
   chossen: String;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
 export default function QuizPage() {
   const [isOpen, setIsOpen] = useState(false);
   const [ans, setAns] = useState<question[]>([]);
@@ -63,7 +64,7 @@ export default function QuizPage() {
     };
 
     try {
-      await fetch("http://localhost:5000/api/scores", {
+      await fetch(`${API_URL}/api/scores`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -110,7 +111,7 @@ export default function QuizPage() {
   if (loading)
     return (
       <div className="min-h-screen flex items-center justify-center text-gray-600 dark:text-gray-300 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800">
-        Ładowanie pytań...
+        Loading questions...
       </div>
     );
 
@@ -118,7 +119,7 @@ export default function QuizPage() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-red-50 text-red-700 p-6 text-center bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 ">
         <div>
-          <h2 className="text-2xl font-bold mb-4">Błąd</h2>
+          <h2 className="text-2xl font-bold mb-4">Error</h2>
           <p>{error}</p>
         </div>
       </div>
@@ -139,7 +140,7 @@ export default function QuizPage() {
             {/* Okno */}
             <div className="relative bg-white dark:bg-slate-900 rounded-2xl shadow-2xl p-6 max-w-2xl w-full z-10 overflow-y-auto max-h-[80vh]">
               <h2 className="text-2xl font-bold text-slate-800 dark:text-slate-100 mb-4">
-                Twoje odpowiedzi
+                Your answers
               </h2>
               <div className="space-y-4">
                 {ans.map((a, idx) => (
@@ -152,7 +153,7 @@ export default function QuizPage() {
                       dangerouslySetInnerHTML={{ __html: a.question }}
                     />
                     <p className="mt-2 text-green-600 dark:text-green-400">
-                      ✅ Poprawna: {a.correct}
+                      ✅ Correct: {a.correct}
                     </p>
                     <p
                       className={`mt-1 ${
@@ -162,8 +163,8 @@ export default function QuizPage() {
                       }`}
                     >
                       {a.chossen === a.correct
-                        ? "✔️ Twoja odpowiedź była poprawna"
-                        : `❌ Wybrałeś: ${a.chossen}`}
+                        ? "✔️ Your answers was correct"
+                        : `❌ You chosse: ${a.chossen}`}
                     </p>
                   </div>
                 ))}
@@ -173,7 +174,7 @@ export default function QuizPage() {
                 onClick={() => setIsOpen(false)}
                 className="mt-6 px-6 py-2 rounded-xl bg-gradient-to-r from-blue-500 to-blue-800 text-white font-semibold shadow hover:scale-105 transition-transform"
               >
-                Zamknij
+                Close
               </button>
             </div>
           </div>
@@ -181,10 +182,10 @@ export default function QuizPage() {
 
         {/* Podsumowanie */}
         <h2 className="text-4xl font-bold mb-4 text-slate-800 dark:text-slate-100">
-          Koniec!
+          End!
         </h2>
         <p className="text-2xl mb-6 text-slate-700 dark:text-slate-200">
-          Twój wynik: {score} / {questions.length}
+          Your score: {score} / {questions.length}
         </p>
 
         <div className="flex justify-between">
@@ -204,7 +205,7 @@ export default function QuizPage() {
           text-white font-semibold py-3 px-6 rounded-xl shadow-lg
           transform transition-transform duration-200 hover:scale-105 hover:shadow-2xl active:scale-95"
           >
-            Sprawdź odpowiedzi
+            check answers
           </button>
         </div>
       </div>
@@ -214,7 +215,7 @@ export default function QuizPage() {
     <main className="min-h-screen bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-800 p-6 flex flex-col items-center justify-center">
       <div className="max-w-3xl w-full bg-white dark:bg-slate-900 rounded-3xl p-8 shadow-lg">
         <h2 className="text-3xl font-bold mb-6 text-slate-800 dark:text-slate-100 text-center">
-          Pytanie {currentIndex + 1} z {questions.length}
+          Question {currentIndex + 1} z {questions.length}
         </h2>
 
         <p
