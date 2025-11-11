@@ -13,7 +13,7 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchScores = async () => {
       try {
-        const res = await fetch(`${API_URL}api/scores`);
+        const res = await fetch(`${API_URL}/api/scores`);
 
         if (!res.ok) {
           throw new Error("Error fetching scores");

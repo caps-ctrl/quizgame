@@ -64,7 +64,7 @@ export default function QuizPage() {
     };
 
     try {
-      await fetch(`${API_URL}api/scores`, {
+      await fetch(`${API_URL}/api/scores`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
