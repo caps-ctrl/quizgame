@@ -81,5 +81,5 @@ app.post("/api/scores", async (req, res) => {
 
 // Uruchomienie serwera
 app.listen(port, () => {
-  console.log(`Serwer backendu działa na http://localhost:${port}`);
+  console.log(`Serwer backendu 1 działa na http://localhost:${port}`);
 });
