@@ -12,7 +12,7 @@ const prisma = new PrismaClient(); // Stwórz instancję klienta
 // Konfiguracja CORS gotowa na produkcję
 const allowedOrigins = [
   "http://localhost:5173", // Dla developmentu
-  "https://quizgame-flax.vercel.app", // WAŻNE: Wstaw tu swój prawdziwy adres z Vercel
+  "https://quizgame-seven-omega.vercel.app/quiz", // WAŻNE: Wstaw tu swój prawdziwy adres z Vercel
 ];
 
 app.use(
