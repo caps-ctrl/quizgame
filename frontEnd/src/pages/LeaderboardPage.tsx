@@ -6,13 +6,23 @@ type Score = {
   score: number;
   date: string;
 };
+
 const API_URL = import.meta.env.VITE_API_URL;
+
 export default function LeaderboardPage() {
   const [scores, setScores] = useState<Score[]>([]);
+  // 1. Dodajemy stan 'isLoading'
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchScores = async () => {
+      // Ustawiamy ładowanie na true (na wypadek odświeżania w przyszłości)
+      setIsLoading(true);
       try {
+        if (!API_URL) {
+          throw new Error("VITE_API_URL is not defined");
+        }
+
         const res = await fetch(`${API_URL}/api/scores`);
 
         if (!res.ok) {
@@ -24,6 +34,9 @@ export default function LeaderboardPage() {
       } catch (e) {
         console.error("Error loading scores:", e);
         setScores([]);
+      } finally {
+        // 2. Kończymy ładowanie niezależnie od wyniku
+        setIsLoading(false);
       }
     };
 
@@ -44,7 +57,12 @@ export default function LeaderboardPage() {
           </nav>
         </header>
 
-        {scores.length === 0 ? (
+        {/* 3. Zaktualizowana logika renderowania */}
+        {isLoading ? (
+          <p className="text-slate-500 dark:text-slate-400">
+            Loading scores...
+          </p>
+        ) : scores.length === 0 ? (
           <p className="text-slate-500 dark:text-slate-400">
             No saved scores — take the quiz to see your ranking.
           </p>
@@ -61,7 +79,7 @@ export default function LeaderboardPage() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="flex items-center justify-between bg-white dark:bg-slate-900 rounded-2xl p-4 border shadow"
+                className="flex items-center justify-between bg-white dark:bg-slate-900 rounded-2xl p-4 border shadow dark:border-slate-700"
               >
                 <div>
                   <div className="text-sm font-medium">{s.name}</div>
@@ -74,6 +92,7 @@ export default function LeaderboardPage() {
             ))}
           </motion.ol>
         )}
+        {/* Koniec aktualizacji */}
 
         <footer className="mt-12 text-center text-sm text-slate-500 dark:text-slate-400">
           Scores stored in database. <br />© {new Date().getFullYear()} Quiz Win

@@ -9,12 +9,17 @@ type Score = {
   date: string;
 };
 const API_URL = import.meta.env.VITE_API_URL;
+
 export default function QuizHomePage() {
   const [recentScores, setRecentScores] = useState<Score[]>([]);
   const [name, setName] = useState("Player");
+  // 1. Dodajemy stan 'isLoading'
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchRecentScores = async () => {
+      // Resetujemy stan na wszelki wypadek (choć tu ładuje się raz)
+      setIsLoading(true);
       try {
         const res = await fetch(`${API_URL}/api/scores`);
 
@@ -23,11 +28,13 @@ export default function QuizHomePage() {
         }
 
         const parsed: Score[] = await res.json();
-
         setRecentScores(parsed.slice(0, 5));
       } catch (e) {
         console.error("Error loading scores:", e);
         setRecentScores([]);
+      } finally {
+        // 2. Niezależnie od sukcesu czy błędu, kończymy ładowanie
+        setIsLoading(false);
       }
     };
 
@@ -109,7 +116,11 @@ export default function QuizHomePage() {
             className="p-6 rounded-2xl bg-gradient-to-b from-sky-50 to-white dark:from-slate-800 dark:to-slate-900 shadow-md"
           >
             <h3 className="text-xl font-semibold mb-3">Recent scores</h3>
-            {recentScores.length === 0 ? (
+
+            {/* 3. ZAKTUALIZOWANA LOGIKA RENDEROWANIA */}
+            {isLoading ? (
+              <p className="text-sm text-slate-500">Loading recent scores...</p>
+            ) : recentScores.length === 0 ? (
               <p className="text-sm text-slate-500">
                 No saved scores — take the quiz to see your ranking.
               </p>
@@ -131,6 +142,7 @@ export default function QuizHomePage() {
                 ))}
               </ol>
             )}
+            {/* Koniec aktualizacji */}
 
             <div className="mt-6 text-xs text-slate-500">
               Scores stored in database.
